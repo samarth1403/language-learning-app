@@ -12,7 +12,7 @@ const Header = () => {
       <Toolbar>
         <Typography variant="h5" marginRight={"auto"}>
           <Link to="/" style={styles}>
-            Learning App
+            Language Learning App
           </Link>
         </Typography>
         <Link to="/" style={styles}>
