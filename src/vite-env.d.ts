@@ -25,3 +25,15 @@ type FetchedDataType = {
         text : string;
     }[]
 }
+
+type userType = {
+    email : string;
+    password : string;
+}
+
+// declare namespace NodeJS {
+//   interface ProcessEnv {
+//     VITE_REACT_APP_API_KEY: string;
+//     // Add other environment variables here if needed
+//   }
+// }

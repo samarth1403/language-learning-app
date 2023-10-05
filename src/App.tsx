@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react"
 import Loader from "./Components/Loader";
 import './App.css'
 import Header from "./Components/Header";
+import Register from "./Components/Register";
 
 const Home = lazy(() => import("./Components/Home"));
 const Learning = lazy(() => import("./Components/Learning"));
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="quiz" element={<Quiz />} />
               <Route path="result" element={<Result />} />
               <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register/>}/>
             </Route>
           </Routes>
         </Suspense>

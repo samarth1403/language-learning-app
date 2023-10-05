@@ -15,6 +15,9 @@ const Header = () => {
             Language App
           </Link>
         </Typography>
+        <Link to="/translate">
+          Translate
+        </Link>
         <Link to="/" style={styles}>
           Home
         </Link>
