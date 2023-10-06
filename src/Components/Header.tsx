@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <AppBar
       position="static"
-      style={{ minHeight: "80px", justifyContent: "center" }}
+      style={{ minHeight: "80px", justifyContent: "center", cursor:"pointer" }}
     >
       <Toolbar>
         <Typography variant="h5" marginRight={"auto"}>

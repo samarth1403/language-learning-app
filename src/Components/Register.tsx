@@ -20,7 +20,7 @@ const Register = () => {
           .then((auth) => {
             if (auth) {
               setLoading(false);
-              navigate("/");
+              navigate("/login");
             }
           })
           .catch((error) => {
