@@ -55,7 +55,7 @@ const Learning = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <Loader marginTop="4rem" />;
   }
 
   return (
