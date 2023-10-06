@@ -1,9 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+const email:string = JSON.parse(localStorage.getItem("user")!);
+
 const initialState:stateType = {
     loading : false,
     words : [],
-    result : []
+    result : [],
+    user : {
+        email:email,
+    },
 }
 
 const rootSlice = createSlice({
@@ -28,7 +33,7 @@ const rootSlice = createSlice({
         clearState : () => {
             return initialState;
         }
-
+        
     },
 })
 

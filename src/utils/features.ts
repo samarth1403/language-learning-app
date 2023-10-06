@@ -47,8 +47,7 @@ export const translateWords = async (
         },
         headers: {
           "content-type": "application/json",
-          "X-RapidAPI-Key":
-            microsoftTranslationApiKey,
+          "X-RapidAPI-Key": microsoftTranslationApiKey,
           "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
         },
       }
@@ -92,14 +91,14 @@ export const fetchAudio = async (
     r: "0",
     c: "mp3",
     f: "8khz_8bit_mono",
-    b64 : "true"
+    b64: "true",
   });
 
-  if(language === "ja") encodedParams.set("hl", "ja-jp");
-  else if(language === "es") encodedParams.set("hl", "es-es");
-  else if(language === "fr") encodedParams.set("hl", "fr-fr");
-  else if(language === "hi") encodedParams.set("hl", "hi-in");
-  else if(language === "de") encodedParams.set("hl","de-de");
+  if (language === "ja") encodedParams.set("hl", "ja-jp");
+  else if (language === "es") encodedParams.set("hl", "es-es");
+  else if (language === "fr") encodedParams.set("hl", "fr-fr");
+  else if (language === "hi") encodedParams.set("hl", "hi-in");
+  else if (language === "de") encodedParams.set("hl", "de-de");
 
   const { data }: { data: string } = await axios.post(
     "https://voicerss-text-to-speech.p.rapidapi.com/",
@@ -113,6 +112,43 @@ export const fetchAudio = async (
       },
     }
   );
-
   return data;
+};
+
+type translateArgType = Pick<
+  translationDataType,
+  "word" | "fromLang" | "toLang"
+>;
+export const translateWord = async ({
+  word,
+  fromLang,
+  toLang,
+}: translateArgType): Promise<translationDataType> => {
+  try {
+    const sentData = [{ Text: word }];
+    const response = await axios.post(
+      "https://microsoft-translator-text.p.rapidapi.com/translate",
+      sentData,
+      {
+        params: {
+          "to[0]": toLang,
+          "api-version": "3.0",
+          from: fromLang,
+          profanityAction: "NoAction",
+          textType: "plain",
+        },
+        headers: {
+          "content-type": "application/json",
+          "X-RapidAPI-Key": microsoftTranslationApiKey,
+          "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
+        },
+      }
+    );
+    const res: FetchedDataType[] = response.data;
+    const result: string = res[0].translations[0].text;
+    return {result,word,fromLang,toLang};
+  } catch (error) {
+    console.log(error);
+    throw new Error("Some Error");
+  }
 };

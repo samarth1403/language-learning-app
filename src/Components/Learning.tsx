@@ -59,7 +59,10 @@ const Learning = () => {
   }
 
   return (
-    <Container maxWidth="sm" style={{ padding: "2rem" }}>
+    <Container
+      style={{ padding: "2rem 2rem" , display:"flex" , flexDirection:"column", flexWrap:"nowrap", justifyContent:"center", alignItems:"center" , marginTop:"4rem" , backgroundColor:"white" , borderRadius:"20px"}}
+      maxWidth="xs"
+    >
       <Stack
         style={{
           display: "flex",
@@ -80,7 +83,9 @@ const Learning = () => {
         >
           <ArrowBack />
         </Button>
-        <Typography variant="h6">Learning Made Easy</Typography>
+        <Typography variant="h6" >
+          Learning Made Easy
+        </Typography>
       </Stack>
       <Stack
         style={{
@@ -92,7 +97,7 @@ const Learning = () => {
           marginTop: "2rem",
         }}
       >
-        <Typography variant="h5">
+        <Typography variant="h5" >
           {count + 1} - {words[count]?.word} : {words[count]?.meaning}
         </Typography>
 
@@ -108,8 +113,7 @@ const Learning = () => {
       </Stack>
       <Button
         variant="contained"
-        fullWidth
-        sx={{ marginTop: "2rem" }}
+        sx={{ marginTop: "2rem", width: "100px" }}
         onClick={
           count === words.length - 1
             ? () => {

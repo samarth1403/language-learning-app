@@ -1,7 +1,7 @@
 import {AppBar , Toolbar , Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const styles = { color: "white", textDecoration: "none", margin: "0.5rem" };
+const styles = { color: "white", textDecoration: "none", margin: "0.5rem" , fontWeight:"600" };
 
 const Header = () => {
   return (
@@ -15,11 +15,8 @@ const Header = () => {
             Language App
           </Link>
         </Typography>
-        <Link to="/translate">
+        <Link to="/translate" style={styles}>
           Translate
-        </Link>
-        <Link to="/" style={styles}>
-          Home
         </Link>
         <Link to="/login" style={styles}>
           Login

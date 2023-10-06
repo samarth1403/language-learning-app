@@ -13,16 +13,17 @@ const Login = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const submitHandler = (e:React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth,user.email,user.password)
-    .then((auth)=>{
-      if(auth){
-        navigate("/");
-      }
-    })
-    .catch((error)=>alert(error));
-  }
+    signInWithEmailAndPassword(auth, user.email, user.password)
+      .then((auth) => {
+        if (auth) {
+          localStorage.setItem("user", JSON.stringify(auth.user.email));
+          navigate("/");
+        }
+      })
+      .catch((error) => alert(error));
+  };
   return (
     <Grid
       container

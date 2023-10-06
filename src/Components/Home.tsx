@@ -1,5 +1,6 @@
 import {Container , Typography , Stack , Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import Translate from "./Translate";
 const languages: languageInfoType[] = [
   {
     name: "Hindi",
@@ -46,23 +47,36 @@ const Home = () => {
   });
 
   return (
-    <Container maxWidth="sm" style={{ backgroundColor: "#E1C6FC" }}>
-      <Typography variant="h4" textAlign={"center"} padding="2rem">
-        Welcome , Begin your journey of Learning.
+    <Container
+      maxWidth="lg"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        fontSize={"28px"}
+        fontWeight={"500"}
+        textAlign={"center"}
+        paddingTop="4rem"
+        paddingBottom="1rem"
+      >
+        Choose Language , which you want to learn
       </Typography>
       <Stack
         direction={"row"}
         padding="1rem"
         flexWrap={"wrap"}
         justifyContent={"center"}
-        alignItems="cente"
+        alignItems="center"
+        maxWidth={"md"}
         sx={{ backgroundColor: "", borderRadius: "30px" }}
       >
         {languagesList}
       </Stack>
-      <Typography variant="h4" textAlign={"center"} padding="1rem">
-        Choose Language , which you want to learn
-      </Typography>
+      <Translate />
     </Container>
   );
 }

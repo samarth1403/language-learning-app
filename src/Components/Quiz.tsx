@@ -39,42 +39,46 @@ const Quiz = () => {
    })
 
   return (
-    <Container maxWidth="sm" sx={{padding:"1rem"}}>
-       <Typography m={"2rem 0rem"}>Quiz</Typography>
-       <Typography variant="h4">
+    <Container
+      maxWidth="xs"
+      sx={{ paddingTop: "1rem" , marginTop:"2rem" }}
+      style={{
+       
+        backgroundColor: "white",
+        borderRadius: "20px",
+      }}
+    >
+      <Typography m={"2rem 0rem"}>Quiz</Typography>
+      <Typography variant="h4">
         {count + 1} - {words[count]?.word}
-       </Typography>
+      </Typography>
 
-       <FormControl>
-         <FormLabel sx={{mt:"2rem",mb:"1rem"}}> 
-          Meaning
-         </FormLabel>
-         <RadioGroup value={ans} onChange={(e)=>setAns(e.target.value)}>
-          {
-            words[count]?.options.map((i)=>{
-              return (
-                <FormControlLabel
-                  value={i}
-                  control={<Radio />}
-                  label={i}
-                  key={i}
-                />
-              );
-            })
-          }
-         </RadioGroup>
-       </FormControl>
-       <Button
-        sx={{m:"3rem 0rem"}}
+      <FormControl>
+        <FormLabel sx={{ mt: "2rem", mb: "1rem" }}>Meaning</FormLabel>
+        <RadioGroup value={ans} onChange={(e) => setAns(e.target.value)}>
+          {words[count]?.options.map((i) => {
+            return (
+              <FormControlLabel
+                value={i}
+                control={<Radio />}
+                label={i}
+                key={i}
+              />
+            );
+          })}
+        </RadioGroup>
+      </FormControl>
+      <Button
+        sx={{ m: "1rem 0rem" }}
         variant="contained"
         fullWidth
         onClick={nextHandler}
-        disabled={ans===""}
-       >
-        {count === words.length-1 ? "Submit" : "Next"}
-       </Button>
+        disabled={ans === ""}
+      >
+        {count === words.length - 1 ? "Submit" : "Next"}
+      </Button>
     </Container>
-  )
+  );
 }
 
 export default Quiz

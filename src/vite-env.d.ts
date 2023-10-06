@@ -14,11 +14,14 @@ type WordType = {
 }
 
 type stateType = {
-    loading:boolean;
-    result:string[];
-    words:WordType[];
-    error?:string;
-}
+  loading: boolean;
+  result: string[];
+  words: WordType[];
+  error?: string;
+  user: {
+    email: string;
+  };
+};
 
 type FetchedDataType = {
     translations:{
@@ -29,6 +32,13 @@ type FetchedDataType = {
 type userType = {
     email : string;
     password : string;
+}
+
+type translationDataType = {
+    word:string;
+    result:string;
+    fromLang : string;
+    toLang : string;
 }
 
 // declare namespace NodeJS {
