@@ -9,12 +9,18 @@ import {
   Stack,
   TextField,
   Typography,
+  Button
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { translateWord } from "../utils/features";
+import {  VolumeUp } from "@mui/icons-material";
+import React, { useEffect, useRef, useState } from "react";
+import { fetchAudio, translateWord } from "../utils/features";
+import Loader from "./Loader";
 
 const Translate = () => {
   const [result , setResult] = useState<translationDataType["result"]>("");
+  const [loading , setLoading] = useState<boolean>(false);
+  const [audioSrc , setAudioSrc] = useState<string>("");
+  const audioRef = useRef(null);
   const [translationData, setTranslationData] = useState<translationDataType>({
     word: "",
     result: "",
@@ -22,18 +28,35 @@ const Translate = () => {
     toLang: "",
   });
 
+  const audioHandler = async () => {
+    const player: HTMLAudioElement = audioRef.current!;
+    const language = translationData.toLang; 
+    if (player) {
+      player.play();
+    } else {
+      const data = await fetchAudio(result, language);
+      setAudioSrc(data);
+    }
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const name = e.target.name;
     const value = e.target.value;
     setTranslationData({ ...translationData, [name]: value });
+    setAudioSrc("");
   };
 
   const handleSelectChange = (e: SelectChangeEvent<string>): void => {
     const name = e.target.name;
     const value = e.target.value;
+    if(name === "toLang"){
+      setResult("");
+      setLoading(true);
+    }
     setTranslationData({ ...translationData, [name]: value });
+    setAudioSrc("");
   };
 
   const translateWordAsync = async (translationData: translationDataType) => {
@@ -55,6 +78,9 @@ const Translate = () => {
     setTimeout(() => {
       if (translationData.toLang !== "" && translationData.word !== "") {
         translateWordAsync(translationData);
+        if(result !== ""){
+          setLoading(false);
+        }
       }
       else{
         setResult("");
@@ -144,6 +170,19 @@ const Translate = () => {
             onChange={handleInputChange}
           />
         </Box>
+        {
+          loading === false ? <Box sx={{ width: 50, margin: "20px 0px" }}>
+          {audioSrc && <audio src={audioSrc} autoPlay ref={audioRef}></audio>}
+          <Button
+            sx={{
+              borderRadius: "50%",
+            }}
+            onClick={audioHandler}
+          >
+            <VolumeUp />
+          </Button>
+        </Box> : <Loader marginTop="0rem"/> 
+        }
       </Stack>
     </Container>
   );

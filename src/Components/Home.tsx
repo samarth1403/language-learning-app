@@ -24,8 +24,6 @@ const languages: languageInfoType[] = [
   },
 ];
 
-
-
 const Home = () => {
   const navigate = useNavigate();
   const buttonClickHandler = (language: languageInfoType["code"]): void => {
@@ -48,7 +46,7 @@ const Home = () => {
 
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="xl"
       style={{
         display: "flex",
         flexDirection: "column",

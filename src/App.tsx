@@ -19,7 +19,7 @@ const App = () => {
   return (
     <div
       style={{
-        backgroundColor: "#E1C6FC",
+        backgroundColor: "white",
         width: "100vw",
         minHeight: "100vh",
       }}

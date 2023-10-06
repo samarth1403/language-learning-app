@@ -3,8 +3,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebaseConfig";
+import Loader from "./Loader";
 const Register = () => {
     const [user , setUser] = useState<userType>({email:"",password:""});
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     const changeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
@@ -13,16 +15,21 @@ const Register = () => {
     }
     const submitHandler = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
         createUserWithEmailAndPassword(auth, user.email, user.password)
           .then((auth) => {
             if (auth) {
-             
+              setLoading(false);
               navigate("/");
             }
           })
           .catch((error) => {
             alert(error);
           });
+    }
+
+    if(loading){
+      return <Loader marginTop="4rem" />;
     }
   return (
     <Grid

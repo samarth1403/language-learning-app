@@ -84,7 +84,7 @@ export const ansEvaluation = (arr1: string[], arr2: string[]): number => {
 
 export const fetchAudio = async (
   text: string,
-  language: languageType
+  language: languageType | string
 ): Promise<string> => {
   const encodedParams = new URLSearchParams({
     src: text,

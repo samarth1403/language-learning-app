@@ -1,9 +1,16 @@
 import {AppBar , Toolbar , Typography} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const styles = { color: "white", textDecoration: "none", margin: "0.5rem" , fontWeight:"600" };
 
 const Header = () => {
+  const email = localStorage.getItem("user")!;
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+    window.location.pathname = "";
+  }
   return (
     <AppBar
       position="static"
@@ -18,9 +25,16 @@ const Header = () => {
         <Link to="/translate" style={styles}>
           Translate
         </Link>
-        <Link to="/login" style={styles}>
-          Login
-        </Link>
+        {email === null && (
+          <Link to="/login" style={styles}>
+            Login
+          </Link>
+        )}
+        {email !== null && (
+          <p style={styles} onClick={handleLogout}>
+            Logout
+          </p>
+        )}
       </Toolbar>
     </AppBar>
   );

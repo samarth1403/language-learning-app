@@ -60,7 +60,17 @@ const Learning = () => {
 
   return (
     <Container
-      style={{ padding: "2rem 2rem" , display:"flex" , flexDirection:"column", flexWrap:"nowrap", justifyContent:"center", alignItems:"center" , marginTop:"4rem" , backgroundColor:"white" , borderRadius:"20px"}}
+      style={{
+        padding: "2rem 2rem",
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "nowrap",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "4rem",
+        backgroundColor: "#E1C6FC",
+        borderRadius: "20px",
+      }}
       maxWidth="xs"
     >
       <Stack
@@ -83,9 +93,7 @@ const Learning = () => {
         >
           <ArrowBack />
         </Button>
-        <Typography variant="h6" >
-          Learning Made Easy
-        </Typography>
+        <Typography variant="h6">Learning Made Easy</Typography>
       </Stack>
       <Stack
         style={{
@@ -97,7 +105,7 @@ const Learning = () => {
           marginTop: "2rem",
         }}
       >
-        <Typography variant="h5" >
+        <Typography variant="h5">
           {count + 1} - {words[count]?.word} : {words[count]?.meaning}
         </Typography>
 

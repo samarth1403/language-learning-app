@@ -41,10 +41,9 @@ const Quiz = () => {
   return (
     <Container
       maxWidth="xs"
-      sx={{ paddingTop: "1rem" , marginTop:"2rem" }}
+      sx={{ paddingTop: "1rem", marginTop: "2rem" }}
       style={{
-       
-        backgroundColor: "white",
+        backgroundColor: "#E1C6FC",
         borderRadius: "20px",
       }}
     >
