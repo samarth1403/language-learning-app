@@ -26,7 +26,7 @@ const App = () => {
     >
       <Router>
         <Header />
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader marginTop="4rem"/>}>
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
