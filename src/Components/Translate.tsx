@@ -9,17 +9,17 @@ import {
   Stack,
   TextField,
   Typography,
-  Button
+  Button,
 } from "@mui/material";
-import {  VolumeUp } from "@mui/icons-material";
+import { VolumeUp } from "@mui/icons-material";
 import React, { useEffect, useRef, useState } from "react";
-import { fetchAudio, translateWord } from "../utils/features";
+import { detectLanguage, fetchAudio, translateWord } from "../utils/features";
 import Loader from "./Loader";
 
 const Translate = () => {
-  const [result , setResult] = useState<translationDataType["result"]>("");
-  const [loading , setLoading] = useState<boolean>(false);
-  const [audioSrc , setAudioSrc] = useState<string>("");
+  const [result, setResult] = useState<translationDataType["result"]>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [audioSrc, setAudioSrc] = useState<string>("");
   const audioRef = useRef(null);
   const [translationData, setTranslationData] = useState<translationDataType>({
     word: "",
@@ -30,7 +30,7 @@ const Translate = () => {
 
   const audioHandler = async () => {
     const player: HTMLAudioElement = audioRef.current!;
-    const language = translationData.toLang; 
+    const language = translationData.toLang;
     if (player) {
       player.play();
     } else {
@@ -51,19 +51,20 @@ const Translate = () => {
   const handleSelectChange = (e: SelectChangeEvent<string>): void => {
     const name = e.target.name;
     const value = e.target.value;
-    if(name === "toLang"){
+    if (name === "toLang") {
       setResult("");
-      setLoading(true);
     }
     setTranslationData({ ...translationData, [name]: value });
     setAudioSrc("");
   };
 
   const translateWordAsync = async (translationData: translationDataType) => {
+    setLoading(true);
     try {
+      const language = await detectLanguage({ word: translationData.word });
       const result = await translateWord({
         word: translationData.word,
-        fromLang: translationData.fromLang,
+        fromLang: language.language,
         toLang: translationData.toLang,
       });
       setResult(result.result);
@@ -78,15 +79,14 @@ const Translate = () => {
     setTimeout(() => {
       if (translationData.toLang !== "" && translationData.word !== "") {
         translateWordAsync(translationData);
-        if(result !== ""){
+        if (result !== "") {
           setLoading(false);
         }
-      }
-      else{
+      } else {
         setResult("");
       }
     }, 10);
-  }, [translationData.toLang, translationData.word,result]);
+  }, [translationData.toLang, translationData.word, result]);
 
   return (
     <Container maxWidth="xl">
@@ -119,28 +119,6 @@ const Translate = () => {
         </Box>
         <Box sx={{ width: 260, margin: "20px 0px" }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">
-              Translate From
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={translationData.fromLang}
-              label="Select Language"
-              name="fromLang"
-              onChange={handleSelectChange}
-            >
-              <MenuItem value={"ja"}>Japnese</MenuItem>
-              <MenuItem value={"fr"}>French</MenuItem>
-              <MenuItem value={"es"}>Spanish</MenuItem>
-              <MenuItem value={"hi"}>Hindi</MenuItem>
-              <MenuItem value={"de"}>German</MenuItem>
-              <MenuItem value={"en"}>English</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box sx={{ width: 260, margin: "20px 0px" }}>
-          <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">To</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -170,19 +148,21 @@ const Translate = () => {
             onChange={handleInputChange}
           />
         </Box>
-        {
-          loading === false ? <Box sx={{ width: 50, margin: "20px 0px" }}>
-          {audioSrc && <audio src={audioSrc} autoPlay ref={audioRef}></audio>}
-          <Button
-            sx={{
-              borderRadius: "50%",
-            }}
-            onClick={audioHandler}
-          >
-            <VolumeUp />
-          </Button>
-        </Box> : <Loader marginTop="0rem"/> 
-        }
+        {loading === false ? (
+          <Box sx={{ width: 50, margin: "20px 0px" }}>
+            {audioSrc && <audio src={audioSrc} autoPlay ref={audioRef}></audio>}
+            <Button
+              sx={{
+                borderRadius: "50%",
+              }}
+              onClick={audioHandler}
+            >
+              <VolumeUp />
+            </Button>
+          </Box>
+        ) : (
+          <Loader marginTop="0rem" />
+        )}
       </Stack>
     </Container>
   );

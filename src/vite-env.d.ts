@@ -1,17 +1,17 @@
 /// <reference types="vite/client" />
 
 type languageInfoType = {
-    name : string;
-    code : string;
-}
+  name: string;
+  code: string;
+};
 
-type languageType = "ja" | "hi" | "es" | "fr" | "de"|"kn"|"mr"|"gu"
+type languageType = "ja" | "hi" | "es" | "fr" | "de" | "kn" | "mr" | "gu";
 
 type WordType = {
-    word : string;
-    meaning : string;
-    options : string[];
-}
+  word: string;
+  meaning: string;
+  options: string[];
+};
 
 type stateType = {
   loading: boolean;
@@ -24,22 +24,27 @@ type stateType = {
 };
 
 type FetchedDataType = {
-    translations:{
-        text : string;
-    }[]
-}
+  translations: {
+    text: string;
+  }[];
+};
+
+type FetchLanguageDataType = {
+  language: string;
+  score: number;
+};
 
 type userType = {
-    email : string;
-    password : string;
-}
+  email: string;
+  password: string;
+};
 
 type translationDataType = {
-    word:string;
-    result:string;
-    fromLang : string;
-    toLang : string;
-}
+  word: string;
+  result: string;
+  fromLang: string;
+  toLang: string;
+};
 
 // declare namespace NodeJS {
 //   interface ProcessEnv {

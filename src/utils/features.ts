@@ -2,6 +2,9 @@ import axios from "axios";
 import { generate } from "random-words";
 import _ from "lodash";
 
+// Userd Microsoft Translator Text API to translate words
+// Used Voice RSS Text-To-Speech API to fetch audio
+
 const generateOptions = (
   meanings: { Text: string }[],
   idx: number
@@ -36,19 +39,18 @@ export const translateWords = async (
     }));
 
     const response = await axios.post(
-      "https://microsoft-translator-text.p.rapidapi.com/translate",
+      "https://microsoft-translator-text-api3.p.rapidapi.com/translate",
       words,
       {
         params: {
-          "to[0]": convertingLang,
-          "api-version": "3.0",
-          profanityAction: "NoAction",
+          to: convertingLang,
+          from: "en",
           textType: "plain",
         },
         headers: {
           "content-type": "application/json",
           "X-RapidAPI-Key": microsoftTranslationApiKey,
-          "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
+          "X-RapidAPI-Host": "microsoft-translator-text-api3.p.rapidapi.com",
         },
       }
     );
@@ -127,26 +129,52 @@ export const translateWord = async ({
   try {
     const sentData = [{ Text: word }];
     const response = await axios.post(
-      "https://microsoft-translator-text.p.rapidapi.com/translate",
+      "https://microsoft-translator-text-api3.p.rapidapi.com/translate",
       sentData,
       {
         params: {
-          "to[0]": toLang,
-          "api-version": "3.0",
+          to: toLang,
           from: fromLang,
-          profanityAction: "NoAction",
           textType: "plain",
         },
         headers: {
           "content-type": "application/json",
           "X-RapidAPI-Key": microsoftTranslationApiKey,
-          "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
+          "X-RapidAPI-Host": "microsoft-translator-text-api3.p.rapidapi.com",
         },
       }
     );
     const res: FetchedDataType[] = response.data;
     const result: string = res[0].translations[0].text;
-    return {result,word,fromLang,toLang};
+    return { result, word, fromLang, toLang };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Some Error");
+  }
+};
+
+export const detectLanguage = async ({
+  word,
+}: {
+  word: string;
+}): Promise<{ language: string }> => {
+  try {
+    const sentData = [{ Text: word }];
+    const response = await axios.post(
+      "https://microsoft-translator-text-api3.p.rapidapi.com/detectlanguage",
+      sentData,
+      {
+        headers: {
+          "content-type": "application/json",
+          "X-RapidAPI-Key": microsoftTranslationApiKey,
+          "X-RapidAPI-Host": "microsoft-translator-text-api3.p.rapidapi.com",
+          Accept: "application/json",
+        },
+      }
+    );
+    const res: FetchLanguageDataType[] = response.data;
+    const result: string = res[0].language;
+    return { language: result };
   } catch (error) {
     console.log(error);
     throw new Error("Some Error");
